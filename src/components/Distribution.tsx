@@ -398,9 +398,9 @@ export default function Distribution() {
     <section
       id="distribution"
       data-nav-theme="light"
-      className="relative border-t border-[#1A1208]/10 bg-[#FFF8E7] py-24 md:py-28"
+      className="relative overflow-hidden border-t border-[#1A1208]/10 bg-[#FFF8E7] py-16 sm:py-24 md:py-28"
     >
-      <div className="container mx-auto px-6 text-center">
+      <div className="container mx-auto px-4 text-center sm:px-6">
         <p
           data-gsap-text
           data-gsap-split="words"
@@ -418,7 +418,7 @@ export default function Distribution() {
           data-gsap-words-stagger="0.04"
           data-gsap-start="top 88%"
           data-gsap-end="top 48%"
-          className="font-bebas mb-4 text-[52px] text-[#1A1208] md:text-[64px]"
+          className="font-bebas mb-4 text-[clamp(36px,10vw,64px)] leading-none text-[#1A1208]"
         >
           L&apos;ÉNERGIE SANS FRONTIÈRES
         </h2>
@@ -429,7 +429,7 @@ export default function Distribution() {
           data-gsap-words-stagger="0.02"
           data-gsap-start="top 85%"
           data-gsap-end="top 45%"
-          className="mx-auto mb-10 max-w-2xl font-nunito text-lg text-[#1A1208]/80 md:text-xl"
+          className="mx-auto mb-8 max-w-2xl px-2 font-nunito text-base text-[#1A1208]/80 sm:mb-10 sm:px-0 sm:text-lg md:text-xl"
         >
           De Béjaïa au reste du monde. Retrouvez IZEM partout où l&apos;audace vous mène.
         </p>
@@ -446,7 +446,7 @@ export default function Distribution() {
           data-gsap-text
           data-gsap-start="top 82%"
           data-gsap-end="top 38%"
-          className="relative mx-auto aspect-[2/1] w-full max-w-5xl overflow-hidden rounded-3xl border border-[#1A1208]/10 bg-[#F3EBD4] shadow-[0_20px_60px_rgba(26,18,8,0.08)]"
+          className="relative mx-auto aspect-[4/3] w-full max-w-5xl overflow-hidden rounded-2xl border border-[#1A1208]/10 bg-[#F3EBD4] shadow-[0_20px_60px_rgba(26,18,8,0.08)] sm:aspect-[2/1] sm:rounded-3xl"
         >
           <DistributionMap
             focusedId={focusedId}
@@ -459,7 +459,7 @@ export default function Distribution() {
           data-gsap-stagger="0.08"
           data-gsap-start="top 80%"
           data-gsap-end="top 40%"
-          className="mt-10 flex flex-wrap justify-center gap-3 md:gap-4"
+          className="mt-8 grid grid-cols-2 gap-2 sm:mt-10 sm:flex sm:flex-wrap sm:justify-center sm:gap-3 md:gap-4"
           role="tablist"
           aria-label="Pays de distribution IZEM"
         >
@@ -478,7 +478,7 @@ export default function Distribution() {
                 onMouseLeave={() => setHoverId(null)}
                 onFocus={() => setHoverId(region.id)}
                 onBlur={() => setHoverId(null)}
-                className={`cursor-pointer rounded-full px-5 py-2 font-bebas text-lg tracking-wide transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FF6B2B] focus-visible:ring-offset-2 focus-visible:ring-offset-[#FFF8E7] md:text-xl ${
+                className={`cursor-pointer rounded-full px-3 py-2.5 font-bebas text-base tracking-wide transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FF6B2B] focus-visible:ring-offset-2 focus-visible:ring-offset-[#FFF8E7] sm:px-5 sm:py-2 sm:text-lg md:text-xl ${
                   isActive || isHovered
                     ? 'scale-105 bg-[#1A1208] text-[#FFFBF0] shadow-lg'
                     : 'bg-[#FFD93D]/35 text-[#1A1208] hover:bg-[#FFD93D]/55'

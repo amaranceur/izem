@@ -341,12 +341,12 @@ export default function ZeroSpotlight() {
         aria-hidden="true"
       />
 
-      <div className="relative z-10 container mx-auto flex w-full flex-col items-center gap-12 px-6 py-24 md:flex-row">
+      <div className="relative z-10 container mx-auto flex w-full flex-col items-center gap-10 px-4 py-20 sm:gap-12 sm:px-6 sm:py-24 md:flex-row">
         <div className="w-full text-center md:w-1/2 md:text-left">
           <div
             data-zero-sucre-hero
             data-zero-reveal
-            className="relative mb-6 inline-flex items-baseline gap-3 will-change-[opacity,transform]"
+            className="relative mb-6 flex flex-col items-center gap-4 will-change-[opacity,transform] sm:inline-flex sm:flex-row sm:items-baseline sm:gap-3"
           >
             <div className="relative inline-flex items-center justify-center">
               {[0, 1, 2, 3, 4, 5, 6, 7].map((i) => (
@@ -396,7 +396,7 @@ export default function ZeroSpotlight() {
                 ref={countRef}
                 className="relative font-bebas leading-none text-[#FFFBF0] transition-colors duration-200 will-change-[opacity,transform]"
                 style={{
-                  fontSize: 'clamp(80px, 15vw, 160px)',
+                  fontSize: 'clamp(64px, 18vw, 160px)',
                   filter: 'drop-shadow(0 0 18px rgba(255,251,240,0.35))',
                 }}
               >
@@ -404,10 +404,10 @@ export default function ZeroSpotlight() {
               </span>
             </div>
 
-            <div className="relative flex flex-col items-start gap-2">
+            <div className="relative flex flex-col items-center gap-2 sm:items-start">
               <span
                 data-zero-sucre-word
-                className="relative font-bebas text-5xl text-[#FFFBF0]/80 will-change-[opacity,letter-spacing]"
+                className="relative font-bebas text-4xl text-[#FFFBF0]/80 will-change-[opacity,letter-spacing] sm:text-5xl"
               >
                 SUCRE
                 <span
@@ -433,7 +433,7 @@ export default function ZeroSpotlight() {
             data-gsap-words-stagger="0.05"
             data-gsap-start="top 82%"
             data-gsap-end="top 45%"
-            className="font-bebas text-6xl leading-none text-[#FFFBF0] will-change-[opacity,transform] md:text-8xl"
+            className="font-bebas text-[clamp(48px,12vw,96px)] leading-none text-[#FFFBF0] will-change-[opacity,transform]"
           >
             IZEM ZERO
           </h2>
@@ -445,7 +445,7 @@ export default function ZeroSpotlight() {
             data-gsap-words-stagger="0.02"
             data-gsap-start="top 78%"
             data-gsap-end="top 40%"
-            className="mx-auto mt-4 mb-8 max-w-md font-nunito text-xl font-semibold text-[#FFFBF0]/85 will-change-[opacity,transform] md:mx-0"
+            className="mx-auto mt-4 mb-8 max-w-md font-nunito text-base font-semibold text-[#FFFBF0]/85 will-change-[opacity,transform] sm:text-lg md:mx-0 md:text-xl"
           >
             Toute la force d&apos;IZEM, zéro sucre ajouté. Pour les esprits affûtés qui ne font
             aucun compromis.
@@ -454,19 +454,19 @@ export default function ZeroSpotlight() {
           <div
             data-zero-reveal
             data-gsap-stagger="0.08"
-            className="flex flex-col justify-center gap-4 will-change-[opacity,transform] sm:flex-row md:justify-start"
+            className="flex w-full flex-col justify-center gap-3 will-change-[opacity,transform] sm:flex-row sm:gap-4 md:justify-start"
           >
             <a
               href="#flavors"
               data-gsap-stagger-item
-              className="cursor-pointer rounded-full bg-[#FFFBF0] px-8 py-4 text-center font-nunito text-lg font-extrabold text-[#6366F1] shadow-xl transition-transform duration-200 hover:scale-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FFFBF0] focus-visible:ring-offset-2 focus-visible:ring-offset-[#6366F1]"
+              className="cursor-pointer rounded-full bg-[#FFFBF0] px-6 py-3.5 text-center font-nunito text-base font-extrabold text-[#6366F1] shadow-xl transition-transform duration-200 hover:scale-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FFFBF0] focus-visible:ring-offset-2 focus-visible:ring-offset-[#6366F1] sm:px-8 sm:py-4 sm:text-lg"
             >
               Découvrir IZEM Zero &rarr;
             </a>
             <button
               type="button"
               data-gsap-stagger-item
-              className="cursor-pointer rounded-full border-2 border-[#FFFBF0] px-8 py-4 font-nunito text-lg font-bold text-[#FFFBF0] transition-colors duration-200 hover:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FFFBF0] focus-visible:ring-offset-2 focus-visible:ring-offset-[#6366F1]"
+              className="cursor-pointer rounded-full border-2 border-[#FFFBF0] px-6 py-3.5 font-nunito text-base font-bold text-[#FFFBF0] transition-colors duration-200 hover:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FFFBF0] focus-visible:ring-offset-2 focus-visible:ring-offset-[#6366F1] sm:px-8 sm:py-4 sm:text-lg"
             >
               Valeurs nutritionnelles
             </button>
@@ -490,7 +490,7 @@ export default function ZeroSpotlight() {
             data-zero-can
             src={zeroImg}
             alt="IZEM ZERO — Sans Sucre"
-            className="relative z-10 w-56 object-contain drop-shadow-[0_30px_60px_rgba(99,102,241,0.55)] will-change-transform md:w-72 lg:w-80"
+            className="relative z-10 w-44 object-contain drop-shadow-[0_30px_60px_rgba(99,102,241,0.55)] will-change-transform sm:w-56 md:w-72 lg:w-80"
           />
         </div>
       </div>
@@ -499,14 +499,14 @@ export default function ZeroSpotlight() {
         data-gsap-stagger="0.1"
         data-gsap-start="top 90%"
         data-gsap-end="top 50%"
-        className="absolute bottom-8 left-1/2 z-10 flex -translate-x-1/2 flex-wrap justify-center gap-4"
+        className="absolute bottom-6 left-1/2 z-10 flex max-w-[95vw] -translate-x-1/2 flex-wrap justify-center gap-2 px-2 sm:bottom-8 sm:gap-4 sm:px-0"
       >
         {['0g Sucre', '100% Force', 'Caféine naturelle', 'Vitamines B'].map((feat) => (
           <span
             key={feat}
             data-zero-feat
             data-gsap-stagger-item
-            className="rounded-full border border-white/25 bg-white/15 px-4 py-2 font-nunito text-sm font-bold text-[#FFFBF0] backdrop-blur-sm will-change-[opacity,transform]"
+            className="rounded-full border border-white/25 bg-white/15 px-3 py-1.5 font-nunito text-xs font-bold text-[#FFFBF0] backdrop-blur-sm will-change-[opacity,transform] sm:px-4 sm:py-2 sm:text-sm"
           >
             {feat}
           </span>
@@ -520,7 +520,7 @@ export default function ZeroSpotlight() {
       <section
         id="zero"
         data-nav-theme="dark"
-        className="relative flex min-h-screen w-full items-center overflow-hidden"
+        className="relative flex min-h-[100dvh] w-full items-center overflow-hidden"
         style={{ background: 'var(--grad-zero)' }}
       >
         {content}
@@ -534,13 +534,13 @@ export default function ZeroSpotlight() {
     <section
       ref={sectionRef}
       id="zero"
-      style={{ height: `${(1 + SCROLL_LENGTH_VH) * 100}vh` }}
+      style={{ height: `${(1 + SCROLL_LENGTH_VH) * 100}dvh` }}
       aria-label="IZEM Zero"
     >
       <div
         ref={pinRef}
         data-nav-theme="dark"
-        className="relative h-screen overflow-hidden bg-[#1A1208]"
+        className="relative h-[100dvh] overflow-hidden bg-[#1A1208]"
       >
         <div
           className="pointer-events-none absolute inset-0 opacity-30"
@@ -561,13 +561,13 @@ export default function ZeroSpotlight() {
 
         <div
           ref={scrollHintRef}
-          className="pointer-events-none absolute bottom-10 left-1/2 z-30 -translate-x-1/2 text-center"
+          className="pointer-events-none absolute bottom-6 left-1/2 z-30 -translate-x-1/2 px-4 text-center sm:bottom-10"
           aria-hidden="true"
         >
           <p className="font-nunito text-xs font-bold uppercase tracking-[0.35em] text-[#FFFBF0]/50">
             Faites défiler
           </p>
-          <p className="mt-1 font-bebas text-2xl tracking-widest text-[#38BDF8]/80">
+          <p className="mt-1 font-bebas text-xl tracking-widest text-[#38BDF8]/80 sm:text-2xl">
             OUVREZ LE CERCLE
           </p>
         </div>

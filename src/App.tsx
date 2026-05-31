@@ -15,7 +15,7 @@ function App() {
   useGsapScrollText(appRef);
 
   return (
-    <div ref={appRef} className="min-h-screen w-full bg-[#FFF8E7] text-[#1A1208]">
+    <div ref={appRef} className="min-h-[100dvh] w-full max-w-[100vw] overflow-x-hidden bg-[#FFF8E7] text-[#1A1208]">
       <Navbar />
       <main>
         <Hero3D />

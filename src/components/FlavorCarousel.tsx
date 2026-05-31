@@ -71,7 +71,7 @@ function FlavorSlide({ product, index }: { product: Product; index: number }) {
   return (
     <div
       data-flavor-slide={index}
-      className="relative flex h-full w-screen shrink-0 flex-col items-center justify-center overflow-hidden px-6 md:flex-row md:px-20"
+      className="relative flex h-full w-[100vw] max-w-[100vw] shrink-0 flex-col items-center justify-center overflow-hidden px-4 pt-16 pb-8 sm:px-6 md:flex-row md:px-12 md:pt-0 md:pb-0 lg:px-20"
       style={{ backgroundColor: product.color }}
     >
       <div
@@ -87,12 +87,12 @@ function FlavorSlide({ product, index }: { product: Product; index: number }) {
 
       <div
         data-flavor-content
-        className="z-10 flex w-full flex-col items-start justify-center will-change-[opacity,transform] md:w-1/2 md:pr-10"
+        className="z-10 flex w-full flex-col items-center justify-center text-center will-change-[opacity,transform] md:w-1/2 md:items-start md:pr-10 md:text-left"
       >
         <div className="flex flex-col gap-4">
           <span
             data-flavor-badge
-            className="w-fit rounded-full border border-white/25 px-6 py-2 text-lg font-nunito font-black uppercase tracking-widest shadow-lg"
+            className="w-fit rounded-full border border-white/25 px-4 py-1.5 text-sm font-nunito font-black uppercase tracking-widest shadow-lg sm:px-6 sm:py-2 sm:text-lg"
             style={{ backgroundColor: product.accentColor, color: product.textColor }}
           >
             {product.badge}
@@ -100,7 +100,7 @@ function FlavorSlide({ product, index }: { product: Product; index: number }) {
 
           <h3
             data-flavor-title
-            className="font-bebas text-5xl leading-none drop-shadow-lg md:text-8xl"
+            className="font-bebas text-4xl leading-none drop-shadow-lg sm:text-5xl md:text-8xl"
             style={{ color: product.textColor }}
           >
             {product.name}
@@ -108,18 +108,18 @@ function FlavorSlide({ product, index }: { product: Product; index: number }) {
 
           <p
             data-flavor-desc
-            className="max-w-lg font-nunito text-xl font-semibold leading-relaxed opacity-90 md:text-2xl"
+            className="max-w-lg font-nunito text-base font-semibold leading-relaxed opacity-90 sm:text-xl md:text-2xl"
             style={{ color: product.textColor }}
           >
             {product.description}
           </p>
 
-          <div className="mt-8 flex items-center gap-6">
-            <div className="rounded-2xl border border-white/30 bg-white/20 p-4 shadow-xl backdrop-blur-md">
+          <div className="mt-6 flex flex-col items-center gap-4 sm:mt-8 sm:flex-row sm:items-center sm:gap-6 md:items-start">
+            <div className="rounded-2xl border border-white/30 bg-white/20 p-3 shadow-xl backdrop-blur-md sm:p-4">
               {getIcon(product.id, product.textColor)}
             </div>
             <div
-              className="font-nunito text-xl font-bold tracking-wider md:text-2xl"
+              className="text-center font-nunito text-base font-bold tracking-wider sm:text-left sm:text-xl md:text-2xl"
               style={{ color: product.textColor }}
             >
               {product.flavor}
@@ -130,7 +130,7 @@ function FlavorSlide({ product, index }: { product: Product; index: number }) {
         </div>
       </div>
 
-      <div className="relative z-10 mt-8 flex h-[42vh] w-full items-center justify-center md:mt-0 md:h-[72vh] md:w-1/2">
+      <div className="relative z-10 mt-4 flex h-[36vh] min-h-[200px] w-full items-center justify-center sm:mt-6 sm:h-[40vh] md:mt-0 md:h-[72vh] md:w-1/2">
         <div
           data-flavor-glow
           className="pointer-events-none absolute top-1/2 left-1/2 h-[250px] w-[250px] -translate-x-1/2 -translate-y-1/2 rounded-full blur-[90px] will-change-opacity md:h-[420px] md:w-[420px]"
@@ -156,35 +156,35 @@ function FlavorSectionStatic({ product }: { product: Product }) {
       data-flavor-slide={product.id}
       data-nav-theme={navTheme}
       aria-label={product.name}
-      className="relative flex min-h-screen flex-col items-center justify-center overflow-hidden px-6 py-28 md:flex-row md:px-20 md:py-32"
+      className="relative flex min-h-[100dvh] flex-col items-center justify-center overflow-hidden px-4 py-24 text-center sm:px-6 md:flex-row md:items-center md:px-12 md:py-32 md:text-left lg:px-20"
       style={{ backgroundColor: product.color }}
     >
-      <div className="z-10 flex w-full flex-col items-start justify-center md:w-1/2 md:pr-10">
-        <div className="flex flex-col gap-4">
+      <div className="z-10 flex w-full flex-col items-center justify-center md:w-1/2 md:items-start md:pr-10">
+        <div className="flex flex-col items-center gap-4 md:items-start">
           <span
-            className="w-fit rounded-full border border-white/25 px-6 py-2 text-lg font-nunito font-black uppercase tracking-widest shadow-lg"
+            className="w-fit rounded-full border border-white/25 px-4 py-1.5 text-sm font-nunito font-black uppercase tracking-widest shadow-lg sm:px-6 sm:py-2 sm:text-lg"
             style={{ backgroundColor: product.accentColor, color: product.textColor }}
           >
             {product.badge}
           </span>
           <h3
-            className="font-bebas text-5xl leading-none drop-shadow-lg md:text-8xl"
+            className="font-bebas text-4xl leading-none drop-shadow-lg sm:text-5xl md:text-8xl"
             style={{ color: product.textColor }}
           >
             {product.name}
           </h3>
           <p
-            className="max-w-lg font-nunito text-xl font-semibold leading-relaxed opacity-90 md:text-2xl"
+            className="max-w-lg font-nunito text-base font-semibold leading-relaxed opacity-90 sm:text-xl md:text-2xl"
             style={{ color: product.textColor }}
           >
             {product.description}
           </p>
-          <div className="mt-8 flex items-center gap-6">
-            <div className="rounded-2xl border border-white/30 bg-white/20 p-4 shadow-xl backdrop-blur-md">
+          <div className="mt-6 flex flex-col items-center gap-4 sm:mt-8 sm:flex-row sm:gap-6 md:items-start">
+            <div className="rounded-2xl border border-white/30 bg-white/20 p-3 shadow-xl backdrop-blur-md sm:p-4">
               {getIcon(product.id, product.textColor)}
             </div>
             <div
-              className="font-nunito text-xl font-bold tracking-wider md:text-2xl"
+              className="text-center font-nunito text-base font-bold tracking-wider sm:text-left sm:text-xl md:text-2xl"
               style={{ color: product.textColor }}
             >
               {product.flavor}
@@ -194,7 +194,7 @@ function FlavorSectionStatic({ product }: { product: Product }) {
           </div>
         </div>
       </div>
-      <div className="relative z-10 mt-10 flex h-[38vh] w-full items-center justify-center md:mt-0 md:h-[68vh] md:w-1/2">
+      <div className="relative z-10 mt-4 flex h-[36vh] min-h-[200px] w-full items-center justify-center sm:mt-6 sm:h-[40vh] md:mt-0 md:h-[68vh] md:w-1/2">
         <img
           src={product.image}
           alt={product.name}
@@ -312,11 +312,11 @@ export default function FlavorCarousel() {
       <section id="flavors" className="relative" aria-labelledby="flavors-heading">
         <header
           data-nav-theme="dark"
-          className="relative flex min-h-screen flex-col items-center justify-center bg-[#1A1208] px-6 text-center"
+          className="relative flex min-h-[100dvh] flex-col items-center justify-center bg-[#1A1208] px-4 py-24 text-center sm:px-6 md:py-28"
         >
           <h2
             id="flavors-heading"
-            className="font-bebas text-[52px] tracking-widest text-white/90 md:text-[88px]"
+            className="font-bebas text-[clamp(40px,12vw,88px)] tracking-widest text-white/90"
           >
             NOS FLAVEURS
           </h2>
@@ -332,7 +332,7 @@ export default function FlavorCarousel() {
     <section id="flavors" className="relative" aria-labelledby="flavors-heading">
       <header
         data-nav-theme="dark"
-        className="relative flex min-h-screen flex-col items-center justify-center bg-[#1A1208] px-6 text-center"
+        className="relative flex min-h-[100dvh] flex-col items-center justify-center bg-[#1A1208] px-4 py-20 text-center sm:px-6 sm:py-24"
       >
         <p className="font-nunito text-xs font-bold uppercase tracking-[0.35em] text-white/60 md:text-sm">
           Faites défiler
@@ -342,7 +342,7 @@ export default function FlavorCarousel() {
           data-gsap-text
           data-gsap-split="words"
           data-gsap-words-stagger="0.05"
-          className="mt-4 font-bebas text-[52px] tracking-widest text-white/90 drop-shadow-md md:text-[88px]"
+          className="mt-3 font-bebas text-[clamp(40px,12vw,88px)] tracking-widest text-white/90 drop-shadow-md"
         >
           NOS FLAVEURS
         </h2>
@@ -365,7 +365,7 @@ export default function FlavorCarousel() {
         <div
           ref={pinRef}
           data-nav-theme="dark"
-          className="relative flex h-screen items-center overflow-hidden"
+          className="relative flex h-[100dvh] items-center overflow-hidden"
         >
           <div
             ref={trackRef}

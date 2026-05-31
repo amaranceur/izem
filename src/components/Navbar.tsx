@@ -80,10 +80,10 @@ export default function Navbar() {
         isScrolled || isLight ? 'border-b' : 'border-transparent'
       }`}
     >
-      <div className="container mx-auto flex items-center justify-between px-6 md:px-8">
+      <div className="container mx-auto flex items-center justify-between px-4 sm:px-6 md:px-8">
         <a
           href="#"
-          className={`cursor-pointer font-bebas text-5xl tracking-widest transition-colors duration-300 md:text-6xl ${textClass} ${
+          className={`cursor-pointer font-bebas text-4xl tracking-widest transition-colors duration-300 sm:text-5xl md:text-6xl ${textClass} ${
             !isLight ? 'drop-shadow-md' : ''
           }`}
         >
@@ -117,17 +117,17 @@ export default function Navbar() {
 
         <button
           type="button"
-          className={`md:hidden ${textClass}`}
+          className={`touch-target flex items-center justify-center md:hidden ${textClass}`}
           onClick={() => setMenuOpen(!isMenuOpen)}
           aria-label={isMenuOpen ? 'Fermer le menu' : 'Ouvrir le menu'}
         >
-          {isMenuOpen ? <X size={32} /> : <Menu size={32} />}
+          {isMenuOpen ? <X size={28} /> : <Menu size={28} />}
         </button>
       </div>
 
       {isMenuOpen && (
         <div
-          className={`absolute top-full left-0 flex w-full flex-col gap-6 border-b px-8 py-6 shadow-2xl md:hidden ${
+          className={`absolute top-full left-0 flex w-full flex-col gap-2 border-b px-4 py-4 shadow-2xl sm:px-8 sm:py-6 md:hidden ${
             isLight
               ? 'border-[#1A1208]/10 bg-[#FFF8E7]/98 backdrop-blur-xl'
               : 'border-white/10 bg-[#1A1208]/95 backdrop-blur-xl'
@@ -137,7 +137,7 @@ export default function Navbar() {
             <a
               key={link.name}
               href={link.href}
-              className={`font-nunito text-2xl font-bold transition-colors ${
+              className={`flex min-h-[44px] items-center font-nunito text-xl font-bold transition-colors sm:text-2xl ${
                 isLight ? 'text-[#1A1208] hover:text-[#FF6B2B]' : 'text-white hover:text-[#FFD93D]'
               }`}
               onClick={() => setMenuOpen(false)}

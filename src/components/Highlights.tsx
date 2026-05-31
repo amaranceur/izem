@@ -26,7 +26,7 @@ const features = [
 
 export default function Highlights() {
   return (
-    <section id="highlights" data-nav-theme="light" className="relative px-4 pt-10 pb-20 md:pt-14 md:pb-24">
+    <section id="highlights" data-nav-theme="light" className="relative overflow-hidden px-4 pt-10 pb-16 sm:pb-20 md:pt-14 md:pb-24">
       <div className="container mx-auto max-w-5xl">
         <p
           data-gsap-text
@@ -50,7 +50,7 @@ export default function Highlights() {
               <article
                 key={feature.title}
                 data-gsap-stagger-item
-                className="group relative flex flex-col items-center overflow-hidden rounded-3xl border border-white/60 bg-white/90 p-8 text-center shadow-[0_12px_40px_rgba(26,18,8,0.08)] backdrop-blur-xl transition-transform duration-300 hover:-translate-y-2"
+                className="group relative flex flex-col items-center overflow-hidden rounded-2xl border border-white/60 bg-white/90 p-6 text-center shadow-[0_12px_40px_rgba(26,18,8,0.08)] backdrop-blur-xl transition-transform duration-300 hover:-translate-y-2 sm:rounded-3xl sm:p-8"
               >
                 <div
                   className={`relative mb-6 flex h-16 w-16 items-center justify-center rounded-full shadow-inner ${feature.ringClass}`}
@@ -58,7 +58,7 @@ export default function Highlights() {
                   <Icon size={32} className={feature.iconClass} strokeWidth={2.25} />
                 </div>
 
-                <h3 className="font-bebas mb-3 text-3xl text-[#1A1208]">{feature.title}</h3>
+                <h3 className="font-bebas mb-3 text-2xl text-[#1A1208] sm:text-3xl">{feature.title}</h3>
                 <p className="font-nunito text-base font-medium leading-relaxed text-[#1A1208]/70 md:text-[17px]">
                   {feature.desc}
                 </p>

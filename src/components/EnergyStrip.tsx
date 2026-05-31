@@ -13,7 +13,7 @@ export default function EnergyStrip() {
   const repeatedItems = [...items, ...items, ...items, ...items];
 
   return (
-    <section id="energy" data-nav-theme="light" className="overflow-hidden border-y-4 border-[#1A1208] bg-[#FFD93D] py-6">
+    <section id="energy" data-nav-theme="light" className="overflow-hidden border-y-4 border-[#1A1208] bg-[#FFD93D] py-4 sm:py-6">
       <p
         data-gsap-text
         data-gsap-split="words"
@@ -27,9 +27,9 @@ export default function EnergyStrip() {
         {repeatedItems.map((item, index) => (
           <div 
             key={index} 
-            className="flex items-center mx-8 font-bebas text-[48px] text-[#1A1208]"
+            className="mx-4 flex items-center font-bebas text-[clamp(28px,8vw,48px)] text-[#1A1208] sm:mx-8"
           >
-            <span className="mr-4">{item.icon}</span>
+            <span className="mr-2 sm:mr-4 [&>svg]:h-7 [&>svg]:w-7 sm:[&>svg]:h-9 sm:[&>svg]:w-9">{item.icon}</span>
             <span>{item.text}</span>
             <span className="mx-8 opacity-50">·</span>
           </div>

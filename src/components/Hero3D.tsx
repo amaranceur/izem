@@ -67,7 +67,7 @@ export default function Hero3D() {
         mouseX.set(0);
         mouseY.set(0);
       }}
-      className="relative z-20 w-full min-h-[100svh] flex flex-col items-center justify-center overflow-hidden bg-[#FF6B2B] perspective-1000 pb-36 md:pb-44"
+      className="relative z-20 flex w-full min-h-[100svh] flex-col items-center justify-center overflow-hidden bg-[#FF6B2B] perspective-1000 pb-28 sm:pb-36 md:pb-44"
     >
       {/* --- LAYER 1: Deep Gradients & Noise --- */}
       <div className="absolute inset-0 bg-gradient-to-br from-[#FF3E6C] via-[#FF6B2B] to-[#FFD93D] opacity-90" />
@@ -83,7 +83,7 @@ export default function Hero3D() {
       </motion.div>
 
       {/* --- LAYER 3: Particles & Splashes --- */}
-      <div className="absolute inset-0 pointer-events-none">
+      <div className="absolute inset-0 pointer-events-none hidden sm:block">
         <motion.div style={{ x: particlesX, y: particlesY }}>
           <div className="absolute top-1/4 left-[15%] text-white/40 animate-float" style={{ animationDelay: '0s' }}><Zap size={40} /></div>
           <div className="absolute bottom-1/3 right-[18%] text-white/50 animate-float" style={{ animationDelay: '1s' }}><Flame size={48} /></div>
@@ -95,7 +95,7 @@ export default function Hero3D() {
       {/* Note: LAYER 4 (Square Light Rays) has been removed as requested */}
 
       {/* --- LAYER 5: Main Content (Center Composition) --- */}
-      <div className="relative z-10 container mx-auto px-6 flex flex-col items-center justify-center text-center pt-24 h-full">
+      <div className="relative z-10 container mx-auto flex h-full flex-col items-center justify-center px-4 pt-20 text-center sm:px-6 sm:pt-24">
         
         {/* Massive 3D Can Container */}
         <motion.div 
@@ -105,7 +105,7 @@ export default function Hero3D() {
             x: canTranslateX,
             y: canTranslateY
           }}
-          className="relative w-full max-w-[400px] md:max-w-[500px] aspect-[1/1.5] mb-8 transform-gpu preserve-3d cursor-pointer group"
+          className="relative mb-6 aspect-[1/1.5] w-full max-w-[280px] transform-gpu preserve-3d group cursor-pointer sm:max-w-[340px] md:mb-8 md:max-w-[500px]"
         >
           {/* Intense Shadow */}
           <motion.div 
@@ -132,7 +132,7 @@ export default function Hero3D() {
           <h1 
             ref={headlineRef}
             className="font-bebas text-white tracking-wide leading-[0.85] drop-shadow-2xl"
-            style={{ fontSize: 'clamp(80px, 15vw, 180px)' }}
+            style={{ fontSize: 'clamp(56px, 14vw, 180px)' }}
           >
             {'RÉVEILLE TON'.split('').map((char, i) => (
               <span key={`rt-${i}`} className="char inline-block">{char === ' ' ? '\u00A0' : char}</span>
@@ -147,7 +147,7 @@ export default function Hero3D() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 1, duration: 0.8 }}
-            className="font-nunito text-xl md:text-3xl font-semibold text-white/90 drop-shadow-md mt-6 md:mt-8 tracking-wide"
+            className="mt-4 max-w-xs font-nunito text-lg font-semibold tracking-wide text-white/90 drop-shadow-md sm:max-w-none sm:text-xl md:mt-8 md:text-3xl"
           >
             L'énergie algérienne en canette.
           </motion.p>
@@ -158,13 +158,13 @@ export default function Hero3D() {
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 1.3, duration: 0.8, type: 'spring', stiffness: 90 }}
-          className="relative z-40 mt-12 mb-4 flex flex-col gap-5 sm:flex-row"
+          className="relative z-40 mt-8 flex w-full max-w-md flex-col gap-4 px-2 sm:mt-12 sm:max-w-none sm:flex-row sm:justify-center sm:gap-5 sm:px-0"
         >
           <motion.a
             href="#flavors"
             whileHover={{ scale: 1.05, y: -2 }}
             whileTap={{ scale: 0.98 }}
-            className="group relative flex items-center justify-center gap-3 overflow-hidden rounded-full bg-white px-10 py-4 font-nunito text-lg font-extrabold text-[#FF6B2B] shadow-[0_10px_30px_rgba(0,0,0,0.2)]"
+            className="group relative flex w-full items-center justify-center gap-3 overflow-hidden rounded-full bg-white px-8 py-4 font-nunito text-base font-extrabold text-[#FF6B2B] shadow-[0_10px_30px_rgba(0,0,0,0.2)] sm:w-auto sm:px-10 sm:text-lg"
           >
             <span className="relative z-10">Découvrir les saveurs</span>
             <motion.span 
@@ -180,7 +180,7 @@ export default function Hero3D() {
             href="#lifestyle"
             whileHover={{ scale: 1.05, y: -2, backgroundColor: 'rgba(255,255,255,0.22)' }}
             whileTap={{ scale: 0.98 }}
-            className="group relative flex items-center justify-center overflow-hidden rounded-full border border-white/30 bg-white/10 px-10 py-4 font-nunito text-lg font-extrabold text-white backdrop-blur-md"
+            className="group relative flex w-full items-center justify-center overflow-hidden rounded-full border border-white/30 bg-white/10 px-8 py-4 font-nunito text-base font-extrabold text-white backdrop-blur-md sm:w-auto sm:px-10 sm:text-lg"
           >
             Voir l'univers IZEM
           </motion.a>

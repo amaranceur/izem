@@ -12,12 +12,12 @@ export default function LifestyleSection() {
     <section
       id="lifestyle"
       data-nav-theme="light"
-      className="relative overflow-visible bg-[#FFF8E7] py-20 md:py-28"
+      className="relative overflow-hidden bg-[#FFF8E7] py-16 sm:py-20 md:py-28"
     >
-      <div className="pointer-events-none absolute -left-24 top-1/4 h-72 w-72 rounded-full bg-[#FFD93D]/25 blur-3xl" />
-      <div className="pointer-events-none absolute -right-16 bottom-0 h-96 w-96 rounded-full bg-[#FF6B2B]/10 blur-3xl" />
+      <div className="pointer-events-none absolute -left-24 top-1/4 hidden h-72 w-72 rounded-full bg-[#FFD93D]/25 blur-3xl sm:block" />
+      <div className="pointer-events-none absolute -right-16 bottom-0 hidden h-96 w-96 rounded-full bg-[#FF6B2B]/10 blur-3xl sm:block" />
 
-      <div className="container relative z-10 mx-auto px-6">
+      <div className="container relative z-10 mx-auto px-4 sm:px-6">
         <div className="grid items-center gap-14 lg:grid-cols-2 lg:gap-20">
           <div className="order-2 lg:order-1">
             <p
@@ -47,7 +47,7 @@ export default function LifestyleSection() {
               data-gsap-words-stagger="0.015"
               data-gsap-start="top 85%"
               data-gsap-end="top 38%"
-              className="mt-6 max-w-xl font-nunito text-lg leading-relaxed text-[#1A1208]/75 md:text-xl"
+              className="mt-6 max-w-xl font-nunito text-base leading-relaxed text-[#1A1208]/75 sm:text-lg md:text-xl"
             >
               Pour les actifs. Pour les audacieux. Pour les Algériens. IZEM vous accompagne dans
               tous vos moments forts, avec un goût unique et une force inégalée.
@@ -105,7 +105,7 @@ export default function LifestyleSection() {
                   data-gsap-split="words"
                   data-gsap-start="top 75%"
                   data-gsap-end="top 45%"
-                  className="absolute bottom-6 left-6 right-6 font-bebas text-3xl tracking-wide text-white drop-shadow-md"
+                  className="absolute bottom-4 left-4 right-4 font-bebas text-2xl tracking-wide text-white drop-shadow-md sm:bottom-6 sm:left-6 sm:right-6 sm:text-3xl"
                 >
                   VIVEZ CHAQUE INSTANT
                 </p>
