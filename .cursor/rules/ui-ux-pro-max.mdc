@@ -1,0 +1,28 @@
+---
+description: Use UI UX Pro Max skill for all UI/UX work on IZEM. Applies design system, stack guidelines, and pre-delivery checklist.
+globs:
+  - src/**/*
+  - index.html
+  - design-system/**/*
+alwaysApply: false
+---
+
+# UI/UX Pro Max — IZEM
+
+When doing UI/UX (design, build, review, fix, improve):
+
+1. **Read the skill:** `.cursor/skills/ui-ux-pro-max/SKILL.md`
+2. **Read project design system (in order):**
+   - `design-system/izem/pages/[page].md` if it exists
+   - else `design-system/izem/MASTER.md`
+3. **Stack for this repo:** `react` + Tailwind v4 — run stack search when needed:
+   ```powershell
+   python .cursor/skills/ui-ux-pro-max/scripts/search.py "<query>" --stack react
+   ```
+4. **Generate or refresh design system:**
+   ```powershell
+   python .cursor/skills/ui-ux-pro-max/scripts/search.py "<product query>" --design-system --persist -p "IZEM" --stack react
+   ```
+5. **Keep IZEM brand colors** in `design-system/izem/pages/landing.md` — do not override warm IFRI palette with generic skill defaults.
+
+**Pre-delivery:** No emoji icons, pointer cursors, hover transitions, a11y contrast, reduced-motion, responsive breakpoints.

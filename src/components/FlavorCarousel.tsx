@@ -1,19 +1,52 @@
-import { useRef, useState } from 'react';
-import {
-  motion,
-  useScroll,
-  useTransform,
-  useMotionValueEvent,
-  type MotionValue,
-} from 'framer-motion';
-import { Droplet, Flame, Sparkles, Zap, Leaf, Sun } from 'lucide-react';
+import { useLayoutEffect, useRef } from 'react';
+import { motion, useReducedMotion } from 'framer-motion';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { ChevronDown, Droplet, Flame, Sparkles, Zap, Leaf, Sun } from 'lucide-react';
 import { izemProducts } from '../data/products';
+
+gsap.registerPlugin(ScrollTrigger);
+
 const flavors = izemProducts.filter((p) => p.id !== 7);
 const SLIDE_COUNT = flavors.length;
-const SCROLL_VH_PER_SLIDE = 100;
+const SLIDE_STEPS = Math.max(SLIDE_COUNT - 1, 1);
+
+/** Fraction of a slide transition required to commit to the next/previous flavor */
+const SNAP_THRESHOLD = 0.28;
+
+function snapFlavorProgress(progress: number): number {
+  const clamped = gsap.utils.clamp(0, 1, progress);
+  if (SLIDE_COUNT <= 1) return 0;
+
+  const scaled = clamped * SLIDE_STEPS;
+  const baseIndex = Math.floor(scaled);
+  const segmentProgress = scaled - baseIndex;
+
+  if (segmentProgress < SNAP_THRESHOLD) {
+    return baseIndex / SLIDE_STEPS;
+  }
+  if (baseIndex >= SLIDE_STEPS) {
+    return 1;
+  }
+  return (baseIndex + 1) / SLIDE_STEPS;
+}
+
+function getDominantSlideIndex(progress: number): number {
+  const clamped = gsap.utils.clamp(0, 1, progress);
+  if (SLIDE_COUNT <= 1) return 0;
+
+  const scaled = clamped * SLIDE_STEPS;
+  const baseIndex = Math.floor(scaled);
+  const segmentProgress = scaled - baseIndex;
+
+  if (segmentProgress < SNAP_THRESHOLD) {
+    return baseIndex;
+  }
+  return Math.min(baseIndex + 1, SLIDE_COUNT - 1);
+}
 
 function getIcon(id: number, color: string) {
-  const props = { size: 40, color, strokeWidth: 1.5 };
+  const props = { size: 40, color, strokeWidth: 1.5, 'aria-hidden': true as const };
   switch (id) {
     case 1:
       return <Zap {...props} />;
@@ -34,45 +67,7 @@ function getIcon(id: number, color: string) {
 
 type Product = (typeof flavors)[number];
 
-function FlavorSlide({
-  product,
-  index,
-  scrollYProgress,
-}: {
-  product: Product;
-  index: number;
-  scrollYProgress: MotionValue<number>;
-}) {
-  const step = 1 / (SLIDE_COUNT - 1);
-  const center = index * step;
-  const pad = step * 0.55;
-
-  const contentOpacity = useTransform(
-    scrollYProgress,
-    [Math.max(0, center - pad), center, Math.min(1, center + pad)],
-    [0.2, 1, 0.2]
-  );
-  const contentY = useTransform(
-    scrollYProgress,
-    [Math.max(0, center - pad), center, Math.min(1, center + pad)],
-    [56, 0, -56]
-  );
-  const canScale = useTransform(
-    scrollYProgress,
-    [Math.max(0, center - pad * 0.85), center, Math.min(1, center + pad * 0.85)],
-    [0.88, 1, 0.88]
-  );
-  const canY = useTransform(
-    scrollYProgress,
-    [Math.max(0, center - step), center, Math.min(1, center + step)],
-    [32, 0, -32]
-  );
-  const glowOpacity = useTransform(
-    scrollYProgress,
-    [Math.max(0, center - pad), center, Math.min(1, center + pad)],
-    [0.15, 0.55, 0.15]
-  );
-
+function FlavorSlide({ product, index }: { product: Product; index: number }) {
   return (
     <div
       data-flavor-slide={index}
@@ -90,9 +85,9 @@ function FlavorSlide({
       <div className="pointer-events-none absolute -right-20 top-1/4 h-[70vmin] w-[70vmin] rounded-full bg-white/10 blur-3xl" />
       <div className="pointer-events-none absolute -left-16 bottom-0 h-[50vmin] w-[50vmin] rounded-full bg-black/10 blur-3xl" />
 
-      <motion.div
-        style={{ opacity: contentOpacity, y: contentY }}
-        className="z-10 mt-24 flex w-full flex-col items-start justify-center pr-0 md:mt-0 md:w-1/2 md:pr-10"
+      <div
+        data-flavor-content
+        className="z-10 flex w-full flex-col items-start justify-center will-change-[opacity,transform] md:w-1/2 md:pr-10"
       >
         <div className="flex flex-col gap-4">
           <span
@@ -133,18 +128,19 @@ function FlavorSlide({
             </div>
           </div>
         </div>
-      </motion.div>
+      </div>
 
       <div className="relative z-10 mt-8 flex h-[42vh] w-full items-center justify-center md:mt-0 md:h-[72vh] md:w-1/2">
-        <motion.div
-          className="pointer-events-none absolute top-1/2 left-1/2 h-[250px] w-[250px] -translate-x-1/2 -translate-y-1/2 rounded-full blur-[90px] md:h-[420px] md:w-[420px]"
-          style={{ backgroundColor: product.accentColor, opacity: glowOpacity }}
+        <div
+          data-flavor-glow
+          className="pointer-events-none absolute top-1/2 left-1/2 h-[250px] w-[250px] -translate-x-1/2 -translate-y-1/2 rounded-full blur-[90px] will-change-opacity md:h-[420px] md:w-[420px]"
+          style={{ backgroundColor: product.accentColor, opacity: 0.35 }}
         />
-        <motion.img
+        <img
+          data-flavor-can
           src={product.image}
           alt={product.name}
-          style={{ scale: canScale, y: canY }}
-          className="relative h-full w-auto max-w-full object-contain drop-shadow-[0_28px_56px_rgba(0,0,0,0.45)] will-change-transform"
+          className="relative h-full w-auto max-w-full object-contain drop-shadow-[0_28px_56px_rgba(0,0,0,0.45)] will-change-[opacity,transform]"
           draggable={false}
         />
       </div>
@@ -152,100 +148,232 @@ function FlavorSlide({
   );
 }
 
-export default function FlavorCarousel() {
-  const targetRef = useRef<HTMLDivElement>(null);
-  const [activeIndex, setActiveIndex] = useState(0);
-
-  const { scrollYProgress } = useScroll({
-    target: targetRef,
-    offset: ['start start', 'end end'],
-  });
-
-  // 1:1 with scroll — no spring lag
-  const x = useTransform(
-    scrollYProgress,
-    (p) => `-${p * (SLIDE_COUNT - 1) * 100}vw`
-  );
-
-  const progressWidth = useTransform(scrollYProgress, (p) => `${Math.max(p * 100, 2)}%`);
-
-  useMotionValueEvent(scrollYProgress, 'change', (v) => {
-    const next = Math.round(v * (SLIDE_COUNT - 1));
-    setActiveIndex((prev) => (prev === next ? prev : next));
-  });
+function FlavorSectionStatic({ product }: { product: Product }) {
+  const navTheme = product.textColor === '#1A1208' ? 'light' : 'dark';
 
   return (
-    <section
-      id="flavors"
-      ref={targetRef}
-      style={{ height: `${SLIDE_COUNT * SCROLL_VH_PER_SLIDE}vh` }}
-      className="relative bg-[#1A1208]"
+    <article
+      data-flavor-slide={product.id}
+      data-nav-theme={navTheme}
+      aria-label={product.name}
+      className="relative flex min-h-screen flex-col items-center justify-center overflow-hidden px-6 py-28 md:flex-row md:px-20 md:py-32"
+      style={{ backgroundColor: product.color }}
     >
-      <div
-        data-nav-theme="dark"
-        className="sticky top-0 flex h-screen items-center overflow-hidden"
-      >
-        <div className="pointer-events-none absolute top-8 left-0 z-30 w-full px-6 text-center md:top-12">
-          <p className="font-nunito text-xs font-bold uppercase tracking-[0.35em] text-white/50 md:text-sm">
-            Faites défiler
+      <div className="z-10 flex w-full flex-col items-start justify-center md:w-1/2 md:pr-10">
+        <div className="flex flex-col gap-4">
+          <span
+            className="w-fit rounded-full border border-white/25 px-6 py-2 text-lg font-nunito font-black uppercase tracking-widest shadow-lg"
+            style={{ backgroundColor: product.accentColor, color: product.textColor }}
+          >
+            {product.badge}
+          </span>
+          <h3
+            className="font-bebas text-5xl leading-none drop-shadow-lg md:text-8xl"
+            style={{ color: product.textColor }}
+          >
+            {product.name}
+          </h3>
+          <p
+            className="max-w-lg font-nunito text-xl font-semibold leading-relaxed opacity-90 md:text-2xl"
+            style={{ color: product.textColor }}
+          >
+            {product.description}
           </p>
+          <div className="mt-8 flex items-center gap-6">
+            <div className="rounded-2xl border border-white/30 bg-white/20 p-4 shadow-xl backdrop-blur-md">
+              {getIcon(product.id, product.textColor)}
+            </div>
+            <div
+              className="font-nunito text-xl font-bold tracking-wider md:text-2xl"
+              style={{ color: product.textColor }}
+            >
+              {product.flavor}
+              <span className="mx-2 opacity-50">|</span>
+              {product.format}
+            </div>
+          </div>
+        </div>
+      </div>
+      <div className="relative z-10 mt-10 flex h-[38vh] w-full items-center justify-center md:mt-0 md:h-[68vh] md:w-1/2">
+        <img
+          src={product.image}
+          alt={product.name}
+          className="relative h-full w-auto max-w-full object-contain drop-shadow-[0_28px_56px_rgba(0,0,0,0.45)]"
+          draggable={false}
+        />
+      </div>
+    </article>
+  );
+}
+
+function updateSlideFocus(track: HTMLDivElement, progress: number) {
+  const focus = gsap.utils.clamp(0, 1, progress) * SLIDE_STEPS;
+
+  Array.from(track.children).forEach((slide, index) => {
+    const distance = Math.abs(focus - index);
+    const strength = gsap.utils.clamp(0, 1, 1 - distance);
+    const eased = gsap.parseEase('power2.out')(strength);
+    const fade = 0.18 + eased * 0.82;
+    const yOffset = (1 - eased) * 22;
+    const scale = 0.93 + eased * 0.07;
+
+    const content = slide.querySelector<HTMLElement>('[data-flavor-content]');
+    const can = slide.querySelector<HTMLElement>('[data-flavor-can]');
+    const glow = slide.querySelector<HTMLElement>('[data-flavor-glow]');
+
+    if (content) {
+      content.style.opacity = String(fade);
+      content.style.transform = `translate3d(0, ${yOffset}px, 0)`;
+    }
+    if (can) {
+      can.style.opacity = String(fade);
+      can.style.transform = `translate3d(0, ${yOffset * 0.7}px, 0) scale(${scale})`;
+    }
+    if (glow) {
+      glow.style.opacity = String(0.12 + eased * 0.38);
+    }
+  });
+}
+
+function updateNavTheme(pin: HTMLDivElement, progress: number) {
+  const index = getDominantSlideIndex(progress);
+  const theme = flavors[index].textColor === '#1A1208' ? 'light' : 'dark';
+  pin.setAttribute('data-nav-theme', theme);
+}
+
+export default function FlavorCarousel() {
+  const sectionRef = useRef<HTMLDivElement>(null);
+  const pinRef = useRef<HTMLDivElement>(null);
+  const trackRef = useRef<HTMLDivElement>(null);
+  const reduceMotion = useReducedMotion();
+
+  useLayoutEffect(() => {
+    if (reduceMotion) return;
+
+    const section = sectionRef.current;
+    const pin = pinRef.current;
+    const track = trackRef.current;
+    if (!section || !pin || !track) return;
+
+    const getScrollDistance = () => Math.max(track.scrollWidth - window.innerWidth, 0);
+
+    const ctx = gsap.context(() => {
+      const tween = gsap.to(track, {
+        x: () => -getScrollDistance(),
+        ease: 'none',
+        force3D: true,
+      });
+
+      ScrollTrigger.create({
+        trigger: section,
+        start: 'top top',
+        end: () => `+=${getScrollDistance()}`,
+        pin,
+        scrub: 0.85,
+        invalidateOnRefresh: true,
+        anticipatePin: 1,
+        fastScrollEnd: false,
+        animation: tween,
+        snap: {
+          snapTo: snapFlavorProgress,
+          duration: { min: 0.7, max: 1.15 },
+          delay: 0.04,
+          ease: 'power2.inOut',
+        },
+        onUpdate: (self) => {
+          updateSlideFocus(track, self.progress);
+          updateNavTheme(pin, self.progress);
+        },
+        onSnapComplete: (self) => {
+          updateSlideFocus(track, self.progress);
+          updateNavTheme(pin, self.progress);
+        },
+      });
+
+      updateSlideFocus(track, 0);
+    }, section);
+
+    const refresh = () => ScrollTrigger.refresh();
+    window.addEventListener('resize', refresh);
+    window.addEventListener('load', refresh);
+
+    const imgRefresh = window.setTimeout(refresh, 400);
+
+    return () => {
+      window.removeEventListener('resize', refresh);
+      window.removeEventListener('load', refresh);
+      window.clearTimeout(imgRefresh);
+      ctx.revert();
+    };
+  }, [reduceMotion]);
+
+  if (reduceMotion) {
+    return (
+      <section id="flavors" className="relative" aria-labelledby="flavors-heading">
+        <header
+          data-nav-theme="dark"
+          className="relative flex min-h-screen flex-col items-center justify-center bg-[#1A1208] px-6 text-center"
+        >
           <h2
-            data-gsap-text
-            data-gsap-split="words"
-            data-gsap-words-stagger="0.05"
-            className="font-bebas text-[52px] tracking-widest text-white/90 drop-shadow-md md:text-[88px]"
+            id="flavors-heading"
+            className="font-bebas text-[52px] tracking-widest text-white/90 md:text-[88px]"
           >
             NOS FLAVEURS
           </h2>
-        </div>
+        </header>
+        {flavors.map((product) => (
+          <FlavorSectionStatic key={product.id} product={product} />
+        ))}
+      </section>
+    );
+  }
 
-        <motion.div
-          className="flex h-full will-change-transform"
-          style={{
-            x,
-            width: `${SLIDE_COUNT * 100}vw`,
-          }}
+  return (
+    <section id="flavors" className="relative" aria-labelledby="flavors-heading">
+      <header
+        data-nav-theme="dark"
+        className="relative flex min-h-screen flex-col items-center justify-center bg-[#1A1208] px-6 text-center"
+      >
+        <p className="font-nunito text-xs font-bold uppercase tracking-[0.35em] text-white/60 md:text-sm">
+          Faites défiler
+        </p>
+        <h2
+          id="flavors-heading"
+          data-gsap-text
+          data-gsap-split="words"
+          data-gsap-words-stagger="0.05"
+          className="mt-4 font-bebas text-[52px] tracking-widest text-white/90 drop-shadow-md md:text-[88px]"
         >
-          {flavors.map((product, index) => (
-            <FlavorSlide
-              key={product.id}
-              product={product}
-              index={index}
-              scrollYProgress={scrollYProgress}
-            />
-          ))}
-        </motion.div>
+          NOS FLAVEURS
+        </h2>
 
-        <div className="pointer-events-none absolute bottom-8 left-0 z-30 flex w-full flex-col items-center gap-5 px-6 md:bottom-10">
-          <div className="flex items-center gap-3 font-nunito text-sm font-bold tracking-widest text-white/70">
-            <span className="text-white tabular-nums">
-              {String(activeIndex + 1).padStart(2, '0')}
-            </span>
-            <span className="text-white/30">/</span>
-            <span className="tabular-nums text-white/40">
-              {String(SLIDE_COUNT).padStart(2, '0')}
-            </span>
-          </div>
+        <div className="mt-12 flex flex-col items-center gap-2" aria-hidden="true">
+          <span className="font-nunito text-xs font-semibold uppercase tracking-widest text-white/60">
+            Scroll
+          </span>
+          <motion.div
+            animate={{ y: [0, 8, 0] }}
+            transition={{ duration: 1.6, repeat: Infinity, ease: 'easeInOut' }}
+            className="text-white/50"
+          >
+            <ChevronDown size={24} strokeWidth={2} aria-hidden="true" />
+          </motion.div>
+        </div>
+      </header>
 
-          <div className="h-[3px] w-full max-w-xs overflow-hidden rounded-full bg-white/15 md:max-w-sm">
-            <motion.div
-              className="h-full rounded-full bg-white shadow-[0_0_12px_rgba(255,255,255,0.5)]"
-              style={{ width: progressWidth }}
-            />
-          </div>
-
-          <div className="flex items-center gap-2.5">
-            {flavors.map((product, i) => (
-              <motion.span
-                key={product.id}
-                className="rounded-full transition-colors duration-300"
-                style={{
-                  width: i === activeIndex ? 28 : 8,
-                  height: 8,
-                  backgroundColor:
-                    i === activeIndex ? product.accentColor : 'rgba(255,255,255,0.25)',
-                }}
-              />
+      <div ref={sectionRef} className="relative bg-[#1A1208]">
+        <div
+          ref={pinRef}
+          data-nav-theme="dark"
+          className="relative flex h-screen items-center overflow-hidden"
+        >
+          <div
+            ref={trackRef}
+            className="flex h-full w-max will-change-transform"
+            style={{ transform: 'translate3d(0, 0, 0)' }}
+          >
+            {flavors.map((product, index) => (
+              <FlavorSlide key={product.id} product={product} index={index} />
             ))}
           </div>
         </div>

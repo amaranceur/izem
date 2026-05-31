@@ -72,7 +72,7 @@ export default function Navbar() {
   const underlineClass = isLight ? 'bg-[#FF6B2B]' : 'bg-white';
   const ctaClass = isLight
     ? 'border-[#1A1208]/15 bg-[#1A1208] text-white hover:bg-[#FF6B2B] hover:border-[#FF6B2B]'
-    : 'border-white/30 bg-white/20 text-white backdrop-blur-md hover:bg-white hover:text-[#FF6B2B]';
+    : 'cursor-pointer border-[#4285e8]/45 bg-[#4285e8]/15 text-white backdrop-blur-md transition-colors duration-200 hover:border-[#4285e8] hover:bg-[#4285e8] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#4285e8] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0d0a06]';
 
   return (
     <nav
@@ -83,7 +83,7 @@ export default function Navbar() {
       <div className="container mx-auto flex items-center justify-between px-6 md:px-8">
         <a
           href="#"
-          className={`font-bebas text-5xl tracking-widest transition-colors duration-300 md:text-6xl ${textClass} ${
+          className={`cursor-pointer font-bebas text-5xl tracking-widest transition-colors duration-300 md:text-6xl ${textClass} ${
             !isLight ? 'drop-shadow-md' : ''
           }`}
         >
@@ -96,7 +96,7 @@ export default function Navbar() {
               <li key={link.name}>
                 <a
                   href={link.href}
-                  className={`group relative font-nunito text-lg font-bold transition-colors ${linkClass}`}
+                  className={`group relative cursor-pointer font-nunito text-lg font-bold transition-colors duration-200 ${linkClass}`}
                 >
                   {link.name}
                   <span
@@ -108,7 +108,7 @@ export default function Navbar() {
           </ul>
           <a
             href="#flavors"
-            className={`flex items-center gap-2 rounded-full border px-7 py-2.5 font-nunito font-extrabold transition-all duration-300 hover:scale-105 ${ctaClass}`}
+            className={`flex cursor-pointer items-center gap-2 rounded-full border px-7 py-2.5 font-nunito font-extrabold transition-all duration-200 hover:scale-105 ${ctaClass}`}
           >
             Découvrir
             <span>&rarr;</span>
